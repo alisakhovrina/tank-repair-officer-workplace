@@ -1,0 +1,10 @@
+import * as esbuild from "esbuild"; import fs from "fs";
+const r = await esbuild.build({ entryPoints:["src/app.js"], bundle:true, format:"iife", minify:true, write:false, loader:{".json":"json"}, target:"es2020", legalComments:"none" });
+let js = r.outputFiles[0].text.replace(/<\/script/gi,"<\\/script");
+const fd="node_modules/@sap-theming/theming-base-content/content/Base/baseLib/baseTheme/fonts/";
+const b=f=>fs.readFileSync(fd+f).toString("base64");
+const F={reg:b("72-Regular-full.woff2"),bold:b("72-Bold-full.woff2"),semi:b("72-Semibold-full.woff2"),duplex:b("72-SemiboldDuplex-full.woff2"),black:b("72-Black-full.woff2"),mono:b("72Mono-Regular-full.woff2")};
+let html=fs.readFileSync("src/template.html","utf8");
+html=html.replace("__FONTS__",()=>JSON.stringify(F)).replace("__APP__",()=>js);
+fs.mkdirSync("docs",{recursive:true}); fs.writeFileSync("docs/index.html",html);
+console.log("size", (html.length/1024/1024).toFixed(2),"MB");

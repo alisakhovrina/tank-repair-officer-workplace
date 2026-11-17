@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Заявки на ремонт ВВТ — рабочее место офицера (SAP Fiori)</title>
+<script>
+/* Шрифт SAP 72 (с кириллицей), встроенный в страницу */
+(function(){var F=__FONTS__;var map=[["72","reg",400],["72full","reg",400],["72","bold",700],["72full","bold",700],["72-Bold","bold",400],["72-Boldfull","bold",400],["72-Semibold","semi",400],["72-Semiboldfull","semi",400],["72-SemiboldDuplex","duplex",400],["72-SemiboldDuplexfull","duplex",400],["72Black","black",400],["72Blackfull","black",400],["72Mono","mono",400],["72Monofull","mono",400]];
+var css=map.map(function(m){return "@font-face{font-family:'"+m[0]+"';src:url(data:font/woff2;base64,"+F[m[1]]+") format('woff2');font-weight:"+m[2]+";font-style:normal;font-display:swap}"}).join("");
+var s=document.createElement("style");s.textContent=css;document.head.appendChild(s);})();
+</script>
+<style>
+html,body{margin:0;height:100%;background:var(--sapBackgroundColor);font-family:var(--sapFontFamily);color:var(--sapTextColor);font-size:var(--sapFontSize)}
+*{box-sizing:border-box}
+#fcl{height:calc(100vh - 3.25rem)}
+.start{height:100%;display:flex;flex-direction:column;background:var(--sapList_Background);border-right:1px solid var(--sapList_BorderColor)}
+.start-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1rem .5rem}
+.kpi-btn{background:none;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;border-radius:.25rem}
+.kpi-btn .kl{color:var(--sapLinkColor)}
+.kpi-btn:focus-visible{outline:2px solid var(--sapContent_FocusColor);outline-offset:2px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;padding:0 1rem .75rem}
+.kpi{display:flex;flex-direction:column}
+.kpi .kv,.title-kpi .kv{font-family:var(--sapFontLightFamily);font-size:1.5rem;color:var(--sapTextColor);font-variant-numeric:tabular-nums}
+.kpi .kl,.title-kpi .kl{font-size:var(--sapFontSmallSize);color:var(--sapContent_LabelColor)}
+.title-kpi{display:flex;flex-direction:column;align-items:flex-end}
+#tabs{flex:none}
+#qlist{flex:1;overflow:auto}
+.mid{height:100%}
+#dp{height:100%}
+.sub{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.meta{display:inline-flex;align-items:center;gap:.3rem;color:var(--sapContent_LabelColor);font-size:var(--sapFontSize);font-variant-numeric:tabular-nums}
+.meta ui5-icon{width:1rem;height:1rem;color:var(--sapContent_IconColor)}
+#dpContent{container-type:inline-size}
+.pad{padding:1rem 1.5rem 2rem}
+.work{max-width:60rem;display:flex;flex-direction:column;gap:.75rem}
+.docs{display:flex;flex-direction:column;gap:.75rem;position:sticky;top:0}
+/* Шаги */
+.step-card{background:var(--sapGroup_ContentBackgroundColor);border:1px solid var(--sapGroup_ContentBorderColor);border-radius:var(--sapElement_BorderCornerRadius,.75rem);border-radius:.75rem}
+.step-card.open{box-shadow:var(--sapContent_Shadow0);border-color:var(--sapField_Focus_BorderColor,#0070f2)}
+.step-card.locked{background:transparent;border-style:dashed}
+.st-head{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;min-height:3.25rem;flex-wrap:wrap}
+.st-n{width:1.625rem;height:1.625rem;border-radius:50%;display:grid;place-items:center;font-family:var(--sapFontBoldFamily);font-size:.8125rem;border:1.5px solid var(--sapField_BorderColor);color:var(--sapContent_LabelColor);flex:none}
+.st-n ui5-icon{width:.875rem;height:.875rem;color:#fff}
+.open .st-n{background:var(--sapButton_Emphasized_Background);border-color:var(--sapButton_Emphasized_Background);color:#fff}
+.done .st-n{background:var(--sapPositiveElementColor);border-color:var(--sapPositiveElementColor)}
+.st-title{font-family:var(--sapFontBoldFamily);font-size:1rem}
+.locked .st-title{color:var(--sapContent_LabelColor)}
+.st-sum{flex:1;min-width:12rem;color:var(--sapTextColor)}
+.st-head ui5-button{margin-left:auto}
+.st-body{padding:0 1rem 1rem 3.375rem}
+@container (max-width:560px){.st-body{padding-left:1rem}}
+.field{margin-bottom:1rem}
+.field>ui5-label{display:block;margin-bottom:.375rem}
+.strip{margin-bottom:.75rem;display:block}
+.fields{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:.75rem;margin-bottom:1rem}
+@container (max-width:560px){.fields{grid-template-columns:1fr}}
+.fields ui5-input{width:100%}
+.fields ui5-label{display:block;margin-bottom:.25rem}
+.cands-h{display:flex;align-items:center;gap:.375rem;margin-bottom:.25rem;flex-wrap:wrap}
+.cands-h ui5-label{white-space:nowrap}
+.info{width:1rem;height:1rem;color:var(--sapContent_IconColor);cursor:help}
+.muted{color:var(--sapContent_LabelColor)}
+.small{font-size:var(--sapFontSmallSize)}
+.row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+ui5-textarea{width:100%}
+.radios{display:flex;flex-direction:column}
+#redirBody ui5-select{width:100%}
+.crosscheck{display:flex;align-items:center;gap:.375rem;margin:-.25rem 0 .875rem;font-size:var(--sapFontSize);color:var(--sapTextColor)}
+.crosscheck ui5-icon{width:1rem;height:1rem;color:var(--sapContent_IconColor)}
+.crosscheck .diff{color:var(--sapCriticalTextColor)}
+.dup{display:flex;align-items:center;gap:.625rem;padding:.5rem .5rem .5rem .75rem;margin-bottom:.875rem;border-radius:.5rem;background:var(--sapErrorBackground);border:1px solid var(--sapErrorBorderColor)}
+.dup ui5-icon{width:1.125rem;height:1.125rem;color:var(--sapNegativeElementColor);flex:none}
+.dup-t{flex:1}
+.qs{padding:0 1rem .5rem}.qs ui5-input{width:100%}
+/* Подразделения */
+#dpContent .rucs{display:flex;flex-direction:column;gap:.375rem}
+.ruh,.ruc{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.9fr);gap:.75rem;align-items:center}
+.ruh{padding:0 .875rem;font-size:var(--sapFontSmallSize);color:var(--sapContent_LabelColor)}
+.ruc{text-align:left;padding:.625rem .875rem;border:1px solid var(--sapField_BorderColor);border-radius:.625rem;background:var(--sapList_Background);font:inherit;color:inherit;cursor:pointer;min-height:3.25rem}
+.ruc:hover{border-color:var(--sapSelectedColor)}
+.ruc:focus-visible{outline:2px solid var(--sapContent_FocusColor);outline-offset:2px}
+.ruc.on{box-shadow:inset 0 0 0 1px var(--sapSelectedColor);border-color:var(--sapSelectedColor);background:var(--sapList_SelectionBackgroundColor)}
+.ruc.off{cursor:not-allowed;background:var(--sapNeutralBackground);border-style:dashed}
+.ruc.off .ruc-name,.ruc.off .c-load{opacity:.5}
+.c-name{display:flex;gap:.625rem;align-items:center}
+.nm{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}
+.c-name .radio{width:1rem;height:1rem;border-radius:50%;border:1.5px solid var(--sapField_BorderColor);flex:none;position:relative}
+.ruc.on .radio{border-color:var(--sapSelectedColor)}
+.ruc.on .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--sapSelectedColor)}
+.ruc.off .radio{visibility:hidden}
+.ruc-name{font-family:var(--sapFontBoldFamily);line-height:1.25}
+.c-load{display:flex;flex-direction:column;gap:.25rem}
+.lv.lo{color:var(--sapPositiveTextColor)}.lv.mid{color:var(--sapCriticalTextColor)}.lv.hi{color:var(--sapNegativeTextColor)}
+.dots{display:flex;flex-wrap:wrap;gap:3px}
+.dots i{width:.5rem;height:.5rem;border-radius:2px;display:block}
+.dots i.lo{background:var(--sapPositiveElementColor)}.dots i.mid{background:var(--sapCriticalElementColor)}.dots i.hi{background:var(--sapNegativeElementColor)}
+.dots i.empty{background:transparent}
+@container (max-width:640px){
+  .ruh{display:none}
+  .ruc{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:.5rem}
+  .c-name{grid-column:1/-1}
+  .c-can,.c-load,.c-eta{display:flex;flex-direction:column;gap:.125rem}
+  .c-can::before,.c-load::before,.c-eta::before{content:attr(data-k);font-size:var(--sapFontSmallSize);color:var(--sapContent_LabelColor)}
+}
+.ruc-legend{margin-top:.5rem}
+.src-note{display:flex;gap:.625rem;align-items:flex-start;padding:.625rem .875rem;margin-bottom:.875rem;background:var(--sapNeutralBackground);border-left:3px solid var(--sapCriticalColor);border-radius:.375rem}
+.src-note ui5-icon{width:1rem;height:1rem;color:var(--sapContent_IconColor);flex:none;margin-top:.125rem}
+.sn-k{font-size:var(--sapFontSmallSize);color:var(--sapContent_LabelColor);margin-bottom:.125rem}
+.act-sum{padding:.75rem .875rem;margin-bottom:1rem;border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.5rem;background:var(--sapNeutralBackground)}
+.as-h{display:flex;align-items:center;gap:.5rem;font-size:var(--sapFontSmallSize);color:var(--sapContent_LabelColor)}
+.as-h ui5-icon{width:1rem;height:1rem;color:var(--sapContent_IconColor)}
+.as-h ui5-link{margin-left:auto}
+.act-sum ul{margin:.375rem 0 .5rem;padding-left:1.25rem}
+.act-sum li{margin:.125rem 0}
+.as-c b{background:#fff3b0;padding:0 .2rem;border-radius:2px;color:#222}
+/* Сопоставление */
+.match-card{border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.5rem;overflow:hidden;background:var(--sapList_Background)}
+.match-h{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;padding:.625rem .875rem;font-family:var(--sapFontBoldFamily)}
+.match-h ui5-icon{width:1rem;height:1rem;color:inherit}
+.match-h.ok{background:var(--sapSuccessBackground);color:var(--sapPositiveTextColor)}
+.match-h.pick{background:var(--sapInformationBackground);color:var(--sapInformativeTextColor)}
+.match-h.warn{background:var(--sapWarningBackground);color:var(--sapCriticalTextColor)}
+.match-sub{font-family:var(--sapFontFamily);color:var(--sapContent_LabelColor);font-size:var(--sapFontSmallSize)}
+.match-p{padding:.75rem .875rem}
+table.cmp{width:100%;border-collapse:collapse}
+.cmp th{text-align:left;font-weight:normal;font-size:var(--sapFontSmallSize);color:var(--sapContent_LabelColor);padding:.5rem .875rem .25rem}
+.cmp td{padding:.5rem .875rem;border-top:1px solid var(--sapList_BorderColor);vertical-align:middle}
+.cmp td.k{color:var(--sapContent_LabelColor);white-space:nowrap}
+.cmp td.v{font-family:var(--sapFontBoldFamily)}
+.cmp td.raw{color:var(--sapContent_LabelColor)}
+.cmp mark,.alt mark{background:var(--sapWarningBackground);color:var(--sapCriticalTextColor);border-bottom:2px solid var(--sapCriticalColor);padding:0 1px}
+.st{display:inline-flex;gap:.25rem;align-items:center;font-size:var(--sapFontSmallSize)}
+.st ui5-icon{width:.875rem;height:.875rem;color:inherit;flex:none}
+.st.ok{color:var(--sapPositiveTextColor)}.st.fix{color:var(--sapInformativeTextColor)}.st.diff{color:var(--sapCriticalTextColor)}
+.match-dup{display:flex;gap:.5rem;align-items:center;padding:.625rem .875rem;background:var(--sapErrorBackground);color:var(--sapNegativeTextColor);border-top:1px solid var(--sapErrorBorderColor)}
+.match-dup ui5-icon{width:1rem;height:1rem;color:inherit}
+.alt-toggle{display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--sapList_BorderColor);background:none;padding:.625rem .875rem;font:inherit;color:var(--sapLinkColor);cursor:pointer}
+.alt{display:flex;gap:.75rem;align-items:center;width:100%;padding:.625rem .875rem;border:0;border-top:1px solid var(--sapList_BorderColor);background:none;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.alt:hover,.alt-toggle:hover{background:var(--sapList_Hover_Background)}
+.alt:focus-visible,.alt-toggle:focus-visible{outline:2px solid var(--sapContent_FocusColor);outline-offset:-2px}
+.alt.on{background:var(--sapList_SelectionBackgroundColor)}
+.alt .radio{width:1rem;height:1rem;border-radius:50%;border:1.5px solid var(--sapField_BorderColor);flex:none;position:relative}
+.alt.on .radio{border-color:var(--sapSelectedColor)}
+.alt.on .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--sapSelectedColor)}
+.alt-b{display:flex;flex-direction:column;gap:.125rem;min-width:0}
+.links{margin-top:.625rem}
+/* Кандидаты */
+.cand{display:flex;gap:.875rem;align-items:center;padding:.5rem 0;width:100%}
+.score{flex:none;width:3.25rem;text-align:center;border-radius:1rem;padding:.25rem 0;font-family:var(--sapFontBoldFamily);font-size:.875rem}
+.score.pos{background:var(--sapSuccessBackground);color:var(--sapPositiveTextColor)}
+.score.info{background:var(--sapInformationBackground);color:var(--sapInformativeTextColor)}
+.score.crit{background:var(--sapWarningBackground);color:var(--sapCriticalTextColor)}
+.serial{font-family:var(--sapFontBoldFamily);font-size:1rem;letter-spacing:.04em;margin-right:.375rem}
+.serial mark{background:var(--sapWarningBackground);color:var(--sapNegativeTextColor);border-bottom:2px solid var(--sapCriticalColor);padding:0 1px}
+.serial .hit{text-decoration:underline;text-decoration-color:var(--sapSelectedColor);text-decoration-thickness:2px;text-underline-offset:3px}
+.badges{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.25rem}
+.cand-b{min-width:0}
+/* Исполнители */
+.ru{padding:.625rem 0;width:100%}
+.ru-top{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.ru-name{font-family:var(--sapFontBoldFamily)}
+.ru-eta{margin-left:auto;font-family:var(--sapFontBoldFamily);font-variant-numeric:tabular-nums}
+.ru-load{margin-top:.25rem}
+.ru ui5-progress-indicator{width:100%}
+.ru-why{color:var(--sapContent_LabelColor);font-size:var(--sapFontSmallSize);margin-top:.125rem}
+ui5-li-custom{height:auto}
+/* Документы */
+.doc{background:var(--sapGroup_ContentBackgroundColor);border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.75rem;padding:.75rem 1rem 1rem}
+.doc-h{display:flex;align-items:center;gap:.5rem;font-family:var(--sapFontBoldFamily);margin-bottom:.625rem}
+.doc-h ui5-icon{width:1rem;height:1rem;color:var(--sapContent_IconColor)}
+.doc-link{margin-left:auto;font-family:var(--sapFontFamily)}
+.quote{margin:0;padding:.5rem .75rem;background:var(--sapNeutralBackground);border-left:3px solid var(--sapCriticalColor);border-radius:.25rem;font-style:italic}
+.src-seg{margin-bottom:.5rem}
+/* Итог */
+.result{background:var(--sapGroup_ContentBackgroundColor);border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.75rem;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.75rem}
+.r-top{display:flex;align-items:center;gap:.75rem}
+.r-title{font-family:var(--sapFontBoldFamily);font-size:1.125rem}
+.lifecycle{display:flex;gap:0;align-items:center}
+.lc{display:flex;align-items:center;gap:.5rem;color:var(--sapContent_LabelColor);flex:1;position:relative;font-size:var(--sapFontSize)}
+.lc .dot{width:.75rem;height:.75rem;border-radius:50%;border:2px solid var(--sapField_BorderColor);background:var(--sapGroup_ContentBackgroundColor);flex:none}
+.lc.on{color:var(--sapPositiveTextColor)}
+.lc.on .dot{background:var(--sapPositiveElementColor);border-color:var(--sapPositiveElementColor)}
+.lc.cur{color:var(--sapTextColor);font-family:var(--sapFontBoldFamily)}
+.lc.cur .dot{border-color:var(--sapSelectedColor)}
+.act{background:#fdfdfb;border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.375rem;padding:.875rem 1rem;font-family:"Times New Roman",Georgia,serif;font-size:.84rem;line-height:1.5;color:#222}
+.act h4{text-align:center;margin:0;font-size:.875rem;letter-spacing:.03em}
+.act .c{text-align:center;font-size:.75rem;color:#666;margin-bottom:.75rem}
+.act table{border-collapse:collapse;width:100%;margin-bottom:.625rem}
+.act td{padding:.125rem 0;vertical-align:top}
+.act td:first-child{color:#555;width:42%}
+.act ol{margin:.25rem 0 .625rem;padding-left:1.25rem}
+.act .sign{margin-top:.875rem;font-size:.75rem;color:#555}
+.order-doc{margin-top:1rem}
+.act mark{background:#fff3b0}
+#batchBody{padding:.25rem 0 .5rem;width:min(46rem,86vw)}
+.bsteps{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.25rem 0 1rem}
+.bstep{display:flex;align-items:center;gap:.375rem;color:var(--sapContent_LabelColor)}
+.bstep .bn{width:1.375rem;height:1.375rem;border-radius:50%;border:1.5px solid var(--sapField_BorderColor);display:grid;place-items:center;font-size:.75rem;font-family:var(--sapFontBoldFamily)}
+.bstep.cur{color:var(--sapTextColor);font-family:var(--sapFontBoldFamily)}
+.bstep.cur .bn{background:var(--sapButton_Emphasized_Background);border-color:var(--sapButton_Emphasized_Background);color:#fff}
+.bstep.done{color:var(--sapPositiveTextColor)}.bstep.done .bn{background:var(--sapPositiveElementColor);border-color:var(--sapPositiveElementColor);color:#fff}
+.barr{color:var(--sapContent_LabelColor)}
+.bsec{border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.625rem;margin-bottom:.75rem;overflow:hidden}
+.bsec-h{display:flex;justify-content:space-between;align-items:center;gap:.75rem;flex-wrap:wrap;padding:.5rem .5rem .5rem .875rem;background:var(--sapGroup_TitleBackground,var(--sapNeutralBackground))}
+.bhint{padding:.5rem .875rem 0}
+.brow{display:grid;grid-template-columns:4.5rem minmax(0,1fr) minmax(0,1fr) auto;gap:.75rem;align-items:center;padding:.5rem .5rem .5rem .875rem;border-top:1px solid var(--sapList_BorderColor)}
+.bhint+.brow{border-top:0}
+.b-no{font-family:var(--sapFontBoldFamily)}
+.b-a{display:flex;gap:.25rem;justify-content:flex-end}
+@media (max-width:640px){.brow{grid-template-columns:1fr auto}.b-t,.b-m{grid-column:1}.b-a{grid-column:2;grid-row:1/4}}
+.bsec .order-doc{margin:0 .875rem .75rem}
+</style>
+</head>
+<body>
+<ui5-shellbar primary-title="Заявки на ремонт ВВТ" secondary-title="Командование корпуса · отдел ремонта">
+  <ui5-shellbar-item id="batchItem" icon="signature" text="Пакет на подпись"></ui5-shellbar-item>
+  <ui5-avatar slot="profile" initials="ОР" size="XS"></ui5-avatar>
+</ui5-shellbar>
+
+<ui5-flexible-column-layout id="fcl" layout="TwoColumnsMidExpanded">
+  <div class="start" slot="startColumn">
+    <div class="start-head">
+      <ui5-title level="H4">Очередь заявок</ui5-title>
+      <ui5-button id="newBtn" icon="add" design="Transparent" tooltip="Зарегистрировать заявку, поступившую по телефону, почте или на бумаге">Внешняя заявка</ui5-button>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="qs"><ui5-input id="qsearch" type="Search" placeholder="Поиск по всем заявкам: №, серийный, часть" show-clear-icon><ui5-icon slot="icon" name="search"></ui5-icon></ui5-input></div>
+    <ui5-tabcontainer id="tabs" collapsed tab-layout="Inline"></ui5-tabcontainer>
+    <ui5-list id="qlist" selection-mode="Single" separators="Inner" accessible-name="Очередь заявок"></ui5-list>
+  </div>
+  <div class="mid" slot="midColumn">
+    <ui5-dynamic-page id="dp" show-footer>
+      <ui5-dynamic-page-title slot="titleArea" id="dpTitle"></ui5-dynamic-page-title>
+      <div id="dpContent"></div>
+      <ui5-bar slot="footerArea" design="FloatingFooter" id="dpFooter"></ui5-bar>
+    </ui5-dynamic-page>
+  </div>
+</ui5-flexible-column-layout>
+
+<ui5-dialog id="batchDlg" header-text="Подпись нарядов у командира">
+  <div id="batchBody"></div>
+  <ui5-bar slot="footer" design="Footer" id="batchFoot"></ui5-bar>
+</ui5-dialog>
+
+<ui5-dialog id="actDlg" header-text="Акт технического состояния">
+  <div id="actBody" style="width:min(38rem,86vw);padding:.25rem 0"></div>
+  <ui5-bar slot="footer" design="Footer"><ui5-button slot="endContent" design="Transparent" id="actClose">Закрыть</ui5-button></ui5-bar>
+</ui5-dialog>
+<ui5-dialog id="redirDlg" header-text="Переадресовать вышестоящему командованию">
+  <div id="redirBody" style="min-width:24rem"></div>
+  <ui5-bar slot="footer" design="Footer">
+    <ui5-button slot="endContent" design="Emphasized" id="redirOk" icon="paper-plane">Переадресовать</ui5-button>
+    <ui5-button slot="endContent" design="Transparent" id="redirCancel">Отмена</ui5-button>
+  </ui5-bar>
+</ui5-dialog>
+
+<ui5-toast id="toast" placement="BottomCenter" duration="3500"></ui5-toast>
+<script>__APP__</script>
+</body>
+</html>
