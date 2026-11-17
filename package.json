@@ -1,7 +1,7 @@
 {
   "name": "tank-repair-officer-workplace",
   "version": "1.0.0",
-  "description": "Прототип рабочего места офицера по обработке заявок на ремонт ВВТ (SAP Fiori / UI5 Web Components)",
+  "description": "Прототип робочого місця офіцера для опрацювання заявок на ремонт ОВТ (SAP Fiori / UI5 Web Components)",
   "scripts": {
     "build": "node build.mjs"
   },

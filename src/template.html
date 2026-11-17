@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Заявки на ремонт ВВТ — рабочее место офицера (SAP Fiori)</title>
+<title>Заявки на ремонт ОВТ — робоче місце офіцера (SAP Fiori)</title>
 <script>
-/* Шрифт SAP 72 (с кириллицей), встроенный в страницу */
+/* Шрифт SAP 72 (з кирилицею), вбудований у сторінку */
 (function(){var F=__FONTS__;var map=[["72","reg",400],["72full","reg",400],["72","bold",700],["72full","bold",700],["72-Bold","bold",400],["72-Boldfull","bold",400],["72-Semibold","semi",400],["72-Semiboldfull","semi",400],["72-SemiboldDuplex","duplex",400],["72-SemiboldDuplexfull","duplex",400],["72Black","black",400],["72Blackfull","black",400],["72Mono","mono",400],["72Monofull","mono",400]];
 var css=map.map(function(m){return "@font-face{font-family:'"+m[0]+"';src:url(data:font/woff2;base64,"+F[m[1]]+") format('woff2');font-weight:"+m[2]+";font-style:normal;font-display:swap}"}).join("");
 var s=document.createElement("style");s.textContent=css;document.head.appendChild(s);})();
@@ -35,7 +35,7 @@ html,body{margin:0;height:100%;background:var(--sapBackgroundColor);font-family:
 .pad{padding:1rem 1.5rem 2rem}
 .work{max-width:60rem;display:flex;flex-direction:column;gap:.75rem}
 .docs{display:flex;flex-direction:column;gap:.75rem;position:sticky;top:0}
-/* Шаги */
+/* Кроки */
 .step-card{background:var(--sapGroup_ContentBackgroundColor);border:1px solid var(--sapGroup_ContentBorderColor);border-radius:var(--sapElement_BorderCornerRadius,.75rem);border-radius:.75rem}
 .step-card.open{box-shadow:var(--sapContent_Shadow0);border-color:var(--sapField_Focus_BorderColor,#0070f2)}
 .step-card.locked{background:transparent;border-style:dashed}
@@ -73,7 +73,7 @@ ui5-textarea{width:100%}
 .dup ui5-icon{width:1.125rem;height:1.125rem;color:var(--sapNegativeElementColor);flex:none}
 .dup-t{flex:1}
 .qs{padding:0 1rem .5rem}.qs ui5-input{width:100%}
-/* Подразделения */
+/* Підрозділи */
 #dpContent .rucs{display:flex;flex-direction:column;gap:.375rem}
 .ruh,.ruc{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.9fr);gap:.75rem;align-items:center}
 .ruh{padding:0 .875rem;font-size:var(--sapFontSmallSize);color:var(--sapContent_LabelColor)}
@@ -114,7 +114,7 @@ ui5-textarea{width:100%}
 .act-sum ul{margin:.375rem 0 .5rem;padding-left:1.25rem}
 .act-sum li{margin:.125rem 0}
 .as-c b{background:#fff3b0;padding:0 .2rem;border-radius:2px;color:#222}
-/* Сопоставление */
+/* Зіставлення */
 .match-card{border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.5rem;overflow:hidden;background:var(--sapList_Background)}
 .match-h{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;padding:.625rem .875rem;font-family:var(--sapFontBoldFamily)}
 .match-h ui5-icon{width:1rem;height:1rem;color:inherit}
@@ -145,7 +145,7 @@ table.cmp{width:100%;border-collapse:collapse}
 .alt.on .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--sapSelectedColor)}
 .alt-b{display:flex;flex-direction:column;gap:.125rem;min-width:0}
 .links{margin-top:.625rem}
-/* Кандидаты */
+/* Кандидати */
 .cand{display:flex;gap:.875rem;align-items:center;padding:.5rem 0;width:100%}
 .score{flex:none;width:3.25rem;text-align:center;border-radius:1rem;padding:.25rem 0;font-family:var(--sapFontBoldFamily);font-size:.875rem}
 .score.pos{background:var(--sapSuccessBackground);color:var(--sapPositiveTextColor)}
@@ -156,7 +156,7 @@ table.cmp{width:100%;border-collapse:collapse}
 .serial .hit{text-decoration:underline;text-decoration-color:var(--sapSelectedColor);text-decoration-thickness:2px;text-underline-offset:3px}
 .badges{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.25rem}
 .cand-b{min-width:0}
-/* Исполнители */
+/* Виконавці */
 .ru{padding:.625rem 0;width:100%}
 .ru-top{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 .ru-name{font-family:var(--sapFontBoldFamily)}
@@ -165,14 +165,14 @@ table.cmp{width:100%;border-collapse:collapse}
 .ru ui5-progress-indicator{width:100%}
 .ru-why{color:var(--sapContent_LabelColor);font-size:var(--sapFontSmallSize);margin-top:.125rem}
 ui5-li-custom{height:auto}
-/* Документы */
+/* Документи */
 .doc{background:var(--sapGroup_ContentBackgroundColor);border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.75rem;padding:.75rem 1rem 1rem}
 .doc-h{display:flex;align-items:center;gap:.5rem;font-family:var(--sapFontBoldFamily);margin-bottom:.625rem}
 .doc-h ui5-icon{width:1rem;height:1rem;color:var(--sapContent_IconColor)}
 .doc-link{margin-left:auto;font-family:var(--sapFontFamily)}
 .quote{margin:0;padding:.5rem .75rem;background:var(--sapNeutralBackground);border-left:3px solid var(--sapCriticalColor);border-radius:.25rem;font-style:italic}
 .src-seg{margin-bottom:.5rem}
-/* Итог */
+/* Підсумок */
 .result{background:var(--sapGroup_ContentBackgroundColor);border:1px solid var(--sapGroup_ContentBorderColor);border-radius:.75rem;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.75rem}
 .r-top{display:flex;align-items:center;gap:.75rem}
 .r-title{font-family:var(--sapFontBoldFamily);font-size:1.125rem}
@@ -213,21 +213,21 @@ ui5-li-custom{height:auto}
 </style>
 </head>
 <body>
-<ui5-shellbar primary-title="Заявки на ремонт ВВТ" secondary-title="Командование корпуса · отдел ремонта">
-  <ui5-shellbar-item id="batchItem" icon="signature" text="Пакет на подпись"></ui5-shellbar-item>
+<ui5-shellbar primary-title="Заявки на ремонт ОВТ" secondary-title="Командування корпусу · відділ ремонту">
+  <ui5-shellbar-item id="batchItem" icon="signature" text="Пакет на підпис"></ui5-shellbar-item>
   <ui5-avatar slot="profile" initials="ОР" size="XS"></ui5-avatar>
 </ui5-shellbar>
 
 <ui5-flexible-column-layout id="fcl" layout="TwoColumnsMidExpanded">
   <div class="start" slot="startColumn">
     <div class="start-head">
-      <ui5-title level="H4">Очередь заявок</ui5-title>
-      <ui5-button id="newBtn" icon="add" design="Transparent" tooltip="Зарегистрировать заявку, поступившую по телефону, почте или на бумаге">Внешняя заявка</ui5-button>
+      <ui5-title level="H4">Черга заявок</ui5-title>
+      <ui5-button id="newBtn" icon="add" design="Transparent" tooltip="Зареєструвати заявку, що надійшла телефоном, поштою чи на папері">Зовнішня заявка</ui5-button>
     </div>
     <div class="kpis" id="kpis"></div>
-    <div class="qs"><ui5-input id="qsearch" type="Search" placeholder="Поиск по всем заявкам: №, серийный, часть" show-clear-icon><ui5-icon slot="icon" name="search"></ui5-icon></ui5-input></div>
+    <div class="qs"><ui5-input id="qsearch" type="Search" placeholder="Пошук за всіма заявками: №, серійний, частина" show-clear-icon><ui5-icon slot="icon" name="search"></ui5-icon></ui5-input></div>
     <ui5-tabcontainer id="tabs" collapsed tab-layout="Inline"></ui5-tabcontainer>
-    <ui5-list id="qlist" selection-mode="Single" separators="Inner" accessible-name="Очередь заявок"></ui5-list>
+    <ui5-list id="qlist" selection-mode="Single" separators="Inner" accessible-name="Черга заявок"></ui5-list>
   </div>
   <div class="mid" slot="midColumn">
     <ui5-dynamic-page id="dp" show-footer>
@@ -238,20 +238,20 @@ ui5-li-custom{height:auto}
   </div>
 </ui5-flexible-column-layout>
 
-<ui5-dialog id="batchDlg" header-text="Подпись нарядов у командира">
+<ui5-dialog id="batchDlg" header-text="Підпис нарядів у командира">
   <div id="batchBody"></div>
   <ui5-bar slot="footer" design="Footer" id="batchFoot"></ui5-bar>
 </ui5-dialog>
 
-<ui5-dialog id="actDlg" header-text="Акт технического состояния">
+<ui5-dialog id="actDlg" header-text="Акт технічного стану">
   <div id="actBody" style="width:min(38rem,86vw);padding:.25rem 0"></div>
-  <ui5-bar slot="footer" design="Footer"><ui5-button slot="endContent" design="Transparent" id="actClose">Закрыть</ui5-button></ui5-bar>
+  <ui5-bar slot="footer" design="Footer"><ui5-button slot="endContent" design="Transparent" id="actClose">Закрити</ui5-button></ui5-bar>
 </ui5-dialog>
-<ui5-dialog id="redirDlg" header-text="Переадресовать вышестоящему командованию">
+<ui5-dialog id="redirDlg" header-text="Переадресувати вищому командуванню">
   <div id="redirBody" style="min-width:24rem"></div>
   <ui5-bar slot="footer" design="Footer">
-    <ui5-button slot="endContent" design="Emphasized" id="redirOk" icon="paper-plane">Переадресовать</ui5-button>
-    <ui5-button slot="endContent" design="Transparent" id="redirCancel">Отмена</ui5-button>
+    <ui5-button slot="endContent" design="Emphasized" id="redirOk" icon="paper-plane">Переадресувати</ui5-button>
+    <ui5-button slot="endContent" design="Transparent" id="redirCancel">Скасувати</ui5-button>
   </ui5-bar>
 </ui5-dialog>
 
